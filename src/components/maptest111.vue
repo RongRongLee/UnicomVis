@@ -13,6 +13,17 @@ export default {
   },
   mounted() {
     this.init();
+
+      this.$ajax({
+      method: 'get',
+      url:'../static/base_station.csv', 
+      // url: '/api/drummer/8bd17859',
+    }).then(response=>{
+      let _data=response.data;
+      console.log(_data)
+    }).catch(function(err){
+        console.log(err)
+    })
   },
   methods: {
     // 初始化
