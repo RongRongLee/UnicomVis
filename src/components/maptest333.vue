@@ -28,12 +28,13 @@ export default {
         center: [104.75268915646745, 31.45435611535065], // 设置地图中心
         zoom: 13 // 设置地图比例
       });
+      // this.loadData()
     },
     loadData() {
       this.$ajax({
         method: "get",
         // url:'../static/base_station.csv',
-        url: "../static//test.json"
+        url: "../static//my2g3g.json"
       })
         .then(response => {
           let _data = response.data;
@@ -49,14 +50,13 @@ export default {
       let mapData = data.RECORDS;
       console.log(mapData);
       mapData.forEach(d => {
-        console.log(d.label)
-        console.log(d.lon,d.lat)
+        // console.log(d.lon,d.lat)
         drawPoints.push({
           "type": "Feature",
           "properties": {
             "color": "#4cff3d",
-            // "opacity": 0.1,
-            "radius": parseInt(d.label)
+            "opacity": 0.1,
+            "radius": 2
           },
           "geometry": {
             "type": "Point",
@@ -84,7 +84,7 @@ export default {
             //  "circle-radius": 10,
             //   "circle-color": "#388gff",
             'circle-color': ['get',"color"],
-            // 'circle-opacity': ['get',"opacity"],
+            'circle-opacity': ['get',"opacity"],
             'circle-radius':['get',"radius"]
           }
         });
