@@ -7,10 +7,10 @@
 </template>
 <script>
 import mapboxgl from "mapbox-gl";
-import * as d3 from 'd3';
+import * as d3 from "d3";
 export default {
   data() {
-    return {};
+    return {    };
   },
   mounted() {
     this.map_init();
@@ -24,43 +24,45 @@ export default {
       var coordinates = document.getElementById("coordinates");
       this.map = new mapboxgl.Map({
         container: this.$refs.basicMapbox,
-        style: "mapbox://styles/mapbox/streets-v10",
+        style: "mapbox://styles/mapbox/streets-v11",
         center: [104.75268915646745, 31.45435611535065], // 设置地图中心
-        zoom: 13 // 设置地图比例
+        zoom: 13 // 设置初始地图比例
       });
     },
     loadData() {
       this.$ajax({
         method: "get",
         // url:'../static/base_station.csv',
-        url: "../static//test.json"
+        // url: "../static/test.json",
+        url: "http://182.92.167.79:8012/demo/selectNumberByAdress"
       })
         .then(response => {
           let _data = response.data;
-          // console.log(_data)
-          this.test(_data);
+          console.log(_data)
+          this.loadMap(_data);
         })
         .catch(function(err) {
           console.log(err);
         });
     },
-    test(data) {
+    loadMap(mapData) {
       let drawPoints = [];
-      let mapData = data.RECORDS;
+      // let mapData = data.RECORDS;
       console.log(mapData);
       mapData.forEach(d => {
-        console.log(d.label)
-        console.log(d.lon,d.lat)
         drawPoints.push({
-          "type": "Feature",
-          "properties": {
-            "color": "#4cff3d",
+          type: "Feature",
+          properties: {
+            color: "red",
+            label:d.label,
+            name:d.name,
+            // "description":
             // "opacity": 0.1,
-            "radius": parseInt(d.label)
+            radius: parseInt(d.number)
           },
-          "geometry": {
-            "type": "Point",
-            "coordinates": [d.lon, d.lat]
+          geometry: {
+            type: "Point",
+            coordinates: [d.lon, d.lat]
           }
         });
       });
@@ -74,6 +76,7 @@ export default {
             features: drawPoints
           }
         });
+        // this.test(coordinates)
         this.map.addLayer({
           id: "points_layer",
           source: "points_source",
@@ -81,22 +84,34 @@ export default {
           layout: {}, //指渲染位置和可见性
           paint: {
             //指更精细的渲染样式，如不透明度、颜色和翻译等
-            //  "circle-radius": 10,
-            //   "circle-color": "#388gff",
-            'circle-color': ['get',"color"],
-            // 'circle-opacity': ['get',"opacity"],
-            'circle-radius':['get',"radius"]
+            "circle-color": ["get", "color"],
+            "circle-radius": ["get", "radius"]
           }
         });
+        this.map.on('click', "points_layer", (e) =>{
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var color = e.features[0].properties.color
+        var label = e.features[0].properties.label
+        var name = e.features[0].properties.name
+        var popup = new mapboxgl.Popup({
+          closeButton: false,
+          closeOnClick: true
+        });
+        popup.setLngLat(coordinates).setHTML(name).addTo(this.map);
       });
-    }
+        
+      });
+       
+      
+      } 
+        
   },
   computed: {}
 };
 </script>
 <style>
-/* @import url("https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css"); */
-@import url('../../node_modules/mapbox-gl/dist/mapbox-gl.css');
+@import url("https://api.tiles.mapbox.com/mapbox-gl-js/v1.1.1/mapbox-gl.css");
+/* @import url("../../node_modules/mapbox-gl/dist/mapbox-gl.css"); */
 .coordinates {
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
@@ -109,6 +124,11 @@ export default {
   line-height: 18px;
   border-radius: 3px;
   display: none;
+}
+.mapboxgl-popup {
+  max-width: 400px;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  color: black
 }
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right,
