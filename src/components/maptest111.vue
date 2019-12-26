@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;width:100%;text-align:left;">
-    <div ref="basicMapbox" style="height:1000px;width:100%;"></div>
-    <pre id="info"></pre>
+    <div id="map" ref="basicMapbox" style="height:1000px;width:100%;"></div>
+    <svg id="pieLayer" />
     <pre id="coordinates" class="coordinates"></pre>
   </div>
 </template>
@@ -10,11 +10,23 @@ import mapboxgl from "mapbox-gl";
 import * as d3 from "d3";
 export default {
   data() {
-    return {    };
+    return {
+      width: 1800,
+      height: 1000,
+      markers: [
+        { long: 104.627014, lat: 31.45786, name: "Corsica" }, // corsica
+        { long: 104.69351, lat: 43.71, 31.42732: "Nice" }, // nice
+        { long: 104.6481079, lat: 31.46957, name: "Paris" }, // Paris
+        // { long: -1.397, lat: 43.664, name: "Hossegor" }, // Hossegor
+        // { long: 3.075, lat: 50.64, name: "Lille" }, // Lille
+        // { long: -3.83, lat: 58, name: "Morlaix" } // Morlaix
+      ]
+    };
   },
   mounted() {
     this.map_init();
     this.loadData();
+    this.pie_Init("#map");
   },
   methods: {
     // 初始化
@@ -24,10 +36,50 @@ export default {
       var coordinates = document.getElementById("coordinates");
       this.map = new mapboxgl.Map({
         container: this.$refs.basicMapbox,
-        style: "mapbox://styles/mapbox/streets-v11",
+        style: "mapbox://styles/mapbox/dark-v9",
         center: [104.75268915646745, 31.45435611535065], // 设置地图中心
         zoom: 13 // 设置初始地图比例
       });
+    },
+    pie_Init(container) {
+      let that = this;
+      this.container = d3
+        .select("#pieLayer")
+        .append("g")
+        .attr("id", "pie");
+      console.log(this.container);
+      this.drawPie(window.innerWidth, window.innerHeight);
+    },
+    drawPie(width, height) {
+      let that = this;
+      console.log("hgkjhgksdjhfkdj")
+      var svg = d3.select("#pieLayer")
+        .attr("width", width)
+        .attr("height", height);
+      var projection = d3
+        .geoMercator()
+        .center([4, 47]) // GPS of location to zoom on
+        .scale(1020) // This is like the zoom
+        .translate([width / 2, height / 2]);
+      svg
+        .selectAll("myCircles")
+        .data(this.markers)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) {
+          return projection([d.long, d.lat])[0];
+        })
+        .attr("cy", function(d) {
+          return projection([d.long, d.lat])[1];
+        })
+        .attr("r", 500)
+        .attr("class", "circle")
+        .style("fill", "#fff")
+        .attr("stroke", "#69b3a2")
+        .attr("stroke-width", 3)
+        .attr("fill-opacity", 0.4);
+
+        console.log("hgkjhgksdjhfkdj")
     },
     loadData() {
       this.$ajax({
@@ -38,7 +90,7 @@ export default {
       })
         .then(response => {
           let _data = response.data;
-          console.log(_data)
+          console.log(_data);
           this.loadMap(_data);
         })
         .catch(function(err) {
@@ -53,11 +105,11 @@ export default {
         drawPoints.push({
           type: "Feature",
           properties: {
-            color: "red",
-            label:d.label,
-            name:d.name,
+            color: "#00a0e3",
+            label: d.label,
+            name: d.name,
             // "description":
-            // "opacity": 0.1,
+            opacity: 0.5,
             radius: parseInt(d.number)
           },
           geometry: {
@@ -76,7 +128,9 @@ export default {
             features: drawPoints
           }
         });
-        // this.test(coordinates)
+        var features = this.map.querySourceFeatures("points_source");
+        console.log(features);
+        // this.test(coordinates),
         this.map.addLayer({
           id: "points_layer",
           source: "points_source",
@@ -85,26 +139,26 @@ export default {
           paint: {
             //指更精细的渲染样式，如不透明度、颜色和翻译等
             "circle-color": ["get", "color"],
-            "circle-radius": ["get", "radius"]
+            "circle-radius": ["get", "radius"],
+            "circle-opacity": ["get", "opacity"]
           }
         });
-        this.map.on('click', "points_layer", (e) =>{
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var color = e.features[0].properties.color
-        var label = e.features[0].properties.label
-        var name = e.features[0].properties.name
-        var popup = new mapboxgl.Popup({
-          closeButton: false,
-          closeOnClick: true
+        this.map.on("click", "points_layer", e => {
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var color = e.features[0].properties.color;
+          var label = e.features[0].properties.label;
+          var name = e.features[0].properties.name;
+          var popup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: true
+          });
+          popup
+            .setLngLat(coordinates)
+            .setHTML(name)
+            .addTo(this.map);
         });
-        popup.setLngLat(coordinates).setHTML(name).addTo(this.map);
       });
-        
-      });
-       
-      
-      } 
-        
+    }
   },
   computed: {}
 };
@@ -128,7 +182,7 @@ export default {
 .mapboxgl-popup {
   max-width: 400px;
   font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
-  color: black
+  color: black;
 }
 .mapboxgl-ctrl-bottom-left,
 .mapboxgl-ctrl-bottom-right,
