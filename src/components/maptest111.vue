@@ -118,6 +118,7 @@ export default {
           }
         });
       });
+      // woquwanlebiedongwodiannao
       // console.log(data.RECORDS[0].name)
       this.map.on("load", () => {
         //load：在所有必要数据源下载完毕、且首个可见的地图渲染完毕后立即触发
