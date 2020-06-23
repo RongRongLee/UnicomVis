@@ -1,25 +1,42 @@
 <template>
   <div id="app">
-    <!-- <img src="./assets/logo.png"> -->
-    <router-view/>
+    <!-- <router-view/> -->
+    <base-map/>
+    <direction-indicator />
+    <high-assoc-cells/>
+    <user-semantics/>
   </div>
 </template>
 
 <script>
+import DataProvider from './DataProvider';
+import baseMap from './components/baseMap.vue';
+import directionIndicator from './components/DirectionIndicator.vue';
+import highAssocCells from './components/HighAssocCells.vue';
+import userSemantics from './components/UserSemantics.vue';
+// import MapboxView from './components/MapboxView.vue';
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    baseMap,
+    directionIndicator,
+    highAssocCells,
+    userSemantics
+
+  }
 }
 </script>
 
 <style>
 #app {
-  width: 100%;
-  height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: red;
-  margin-top: 60px;
+}
+
+body {
+    margin:0; 
+    padding:0;
+    width:100%;
+    height:100%;
+    background:#333;
 }
 </style>

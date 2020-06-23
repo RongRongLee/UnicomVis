@@ -30,8 +30,8 @@ export default {
 
         //定义地图的投影
         var projection = d3.geoMercator()
-          .center([104.717437, 31.460112])
-          .scale(13000)//设置缩放量
+          .center([104.079024,30.656803])
+          .scale(8000)//设置缩放量
           .rotate([0,0]);
 
         const zoom = d3.zoom()//创建一个缩放行为
@@ -125,6 +125,7 @@ export default {
 
             else return 'white'
           })
+          console.log('fdsfsd')
 
           that.relationsDrawing(selected)//调用relationsDrawing函数，并将基站id传入
           
@@ -271,6 +272,7 @@ export default {
 
       that.$root.$emit('updateDirIndicator', positions)//使用$emit触发当前实例上的自定义事件（并将附加参数都传给监听器回调），使用 $on 监听该事件并调用回调函数。
       //that.$root.$emit('updateInnerNet', [innerEdges, that.cell_info])
+      console.log("fgjdhgfhds")
       that.$root.$emit('updateAssocCells', [graphWithoutEgo, that.cell_info])
       that.$root.$emit('updateTemporal', source_finder)
       
@@ -320,12 +322,11 @@ export default {
 
     d3.select('#' + 'map-view-container')
       .style('position', 'absolute')
-      .style('top', '5%')
-      .style('left', '5%')
+      // .style('top', '5%')
+      // .style('left', '5%')
 
-    this.width = 800
-    this.height = 700
-
+    this.width = 1000
+    this.height = 485
     let that = this
 
     DataProvider.getMapJson().then(response => {
@@ -358,14 +359,15 @@ export default {
 <style scoped>
 #map-view-container{
   width:100%;
-  height:70%;
+  height:100%;
+  background:#333;
 }
 
 .name{
   border-left: lightsalmon solid 3px;
   color:black;
-  padding-left:10px;
-  margin-right: 10px;
+  /* padding-left:10px;
+  margin-right: 10px; */
   right:0px;
   float: right;
 }
