@@ -360,7 +360,7 @@ export default {
 #map-view-container{
   width:100%;
   height:100%;
-  background:#333;
+  background:#4B5566;
 }
 
 .name{

@@ -1,7 +1,7 @@
  <template>
 
   <div id='high-assoc-cells-container'>
-      <div class='name' style="">sankey</div>
+      <div class='name' style="">桑基图</div>
       <div id='high-assoc-cells'>
    
       </div>
@@ -29,7 +29,7 @@ export default {
          }
 
         const svg = d3.select("#high-assoc-cells").append('svg')
-          .attr("viewBox", [-10, -10, this.width + 100, this.height + 100])
+          .attr("viewBox", [-10, -10, this.width + 50, this.height + 50])
           .attr("font-size", 14)
           .attr("font-family", "sans-serif")
 
@@ -89,6 +89,7 @@ export default {
             .attr("y", d => d.y0)
             .attr("height", d => d.y1 - d.y0)
             .attr("width", d => d.x1 - d.x0)
+            .attr("fill","blue")//桑基图边的颜色
             .on('mouseover', function(d){
 
               let sourceId = d.id
@@ -98,15 +99,15 @@ export default {
               .attr('stroke', function(q){
 
                 if (sourceId == q.source.id || sourceId == q.target.id)
-                  return "red"
-                else return 'grey'
+                  return "blue"//鼠标放上去river颜色
+                else return 'grey'//其他river的颜色
               })
             })
             .on('mouseout', d=>{
 
               svg.selectAll('.river')
               .transition()
-              .attr('stroke', 'grey')
+              .attr('stroke', 'blue')//鼠标离开后river的颜色
             })
 
         svg.append("g")
@@ -117,7 +118,7 @@ export default {
             .append("path")
             .attr('class','river')
             .attr("d", sankeyLinkHorizontal())
-            .attr("stroke", 'white')
+            .attr("stroke", 'blue')//初始桑基图的颜色
             .attr("stroke-opacity", '0.4')
             .attr("stroke-width", d => d.width)
             .style("mix-blend-mode", "multiply")
@@ -125,8 +126,8 @@ export default {
 
               that.$root.$emit('updateTemporal2', d)
               that.$root.$emit('updateUserSemantics', d)
-              d3.selectAll('.river').attr('stroke', 'white')
-              d3.select(this).attr('stroke', 'white')
+              // d3.selectAll('.river').attr('stroke', "red")
+              // d3.select(this).attr('stroke', 'red')
             })
             
         svg.append("g")
@@ -136,6 +137,7 @@ export default {
             .enter()
             .append("text")
             .attr('font-family', 'Microsoft Yahei')
+            .attr("fill","white")
             .attr("x", d => d.x0 < that.width / 2 ? d.x1 + 6 : d.x0 - 6)
             .attr("y", d => (d.y1 + d.y0) / 2)
             .attr("dy", "0.35em")

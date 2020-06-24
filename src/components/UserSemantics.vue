@@ -165,9 +165,9 @@ export default {
     d3.select('#' + 'user-semantics-container')
       .style('position', 'absolute')
       .style('top', '5%')
-      .style('right', '0%')
-      .style('width', '30%')
-      .style('height', '85%')
+      .style('right', '20%')
+      .style('width', '15%')
+      .style('height', '20%')
 
     this.width = 600
     this.height = 1650
