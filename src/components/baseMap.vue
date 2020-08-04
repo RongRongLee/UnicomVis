@@ -83,7 +83,7 @@ export default {
         let that = this
         map.on("dblclick.zoom", null);//取消双击缩放
 
-        map.on('dblclick', function(d){
+        map.on('dblclick', function(d){//d是这个事件
 
           let p = d3.mouse(this)//获取在矩形SVG上点击鼠标的坐标
 
@@ -125,7 +125,6 @@ export default {
 
             else return 'white'
           })
-          console.log('fdsfsd')
 
           that.relationsDrawing(selected)//调用relationsDrawing函数，并将基站id传入
           

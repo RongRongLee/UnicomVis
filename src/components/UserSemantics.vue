@@ -75,6 +75,7 @@ export default {
         .attr('transform','rotate(90)')
         .attr('x',0)
         .attr('y',0)
+        .attr('fill',"white")
         .text(d => d.name)
 
         let user_bars = svg.selectAll('userBar')
@@ -102,7 +103,7 @@ export default {
         .attr('width', 30)
         .attr('fill','grey')
         .attr('stroke-width', '0')
-        .attr('opacity', 0.1)
+        .attr('opacity', 0.5)
 
         user_bars.selectAll('step')
         .data(d => d.filter(q => q.start[2] != -1))
@@ -143,6 +144,7 @@ export default {
         .append('text')
         .attr('y', 1700)
         .attr('font-size', 20)
+        .attr('fill','white')
         .attr('x', function(d,i){
             return i * 111
         })
@@ -157,7 +159,7 @@ export default {
         .call(d3.axisRight(yHour));
 
         hourAxisG.selectAll('text')
-        .attr('font-size', 18)
+        .attr('font-size', 25)
 
     }
   },
