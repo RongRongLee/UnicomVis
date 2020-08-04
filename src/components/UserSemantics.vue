@@ -23,6 +23,12 @@ export default {
 
         var accent = d3.scaleOrdinal(d3.schemeSet2);
 
+        accent(-1)
+        accent(0)
+        accent(1)
+        accent(2)
+        accent(3)
+
         d3.select("#user-semantics").selectAll('*').remove()
 
         const svg = d3.select("#user-semantics").append('svg')
@@ -53,8 +59,7 @@ export default {
 
             let meta = {'start': seq[i], 'end': seq[i+1]}
 
-            //if(seq[i+1][0] < 3)
-              segments[name].push(meta)
+            segments[name].push(meta)
           }
         })
 
@@ -68,14 +73,13 @@ export default {
         .enter()
         .append('g')
         .attr('transform',function(d,i){
-
           return 'translate(' + (i * 50) + ',' + 10 + ')'
         })
         .append('text')
+        .attr("fill", 'white')
         .attr('transform','rotate(90)')
         .attr('x',0)
         .attr('y',0)
-        .attr('fill',"white")
         .text(d => d.name)
 
         let user_bars = svg.selectAll('userBar')
@@ -103,7 +107,7 @@ export default {
         .attr('width', 30)
         .attr('fill','grey')
         .attr('stroke-width', '0')
-        .attr('opacity', 0.5)
+        .attr('opacity', 0.1)
 
         user_bars.selectAll('step')
         .data(d => d.filter(q => q.start[2] != -1))
@@ -129,7 +133,7 @@ export default {
         .data([-1,0,1,2,3])
         .enter()
         .append('rect')
-        .attr('y', 1650)
+        .attr('y', 1700)
         .attr('x', function(d,i){
             return i * 111
         })
@@ -142,9 +146,9 @@ export default {
         .data(['No semantic', 'Home','Two high','Weekend','Work time'])
         .enter()
         .append('text')
-        .attr('y', 1700)
-        .attr('font-size', 20)
         .attr('fill','white')
+        .attr('y', 1750)
+        .attr('font-size', 20)
         .attr('x', function(d,i){
             return i * 111
         })
@@ -159,17 +163,19 @@ export default {
         .call(d3.axisRight(yHour));
 
         hourAxisG.selectAll('text')
-        .attr('font-size', 25)
+        .attr('font-size', 18)
+        .attr('fill','white')
 
     }
   },
   mounted(){
+
     d3.select('#' + 'user-semantics-container')
       .style('position', 'absolute')
-      .style('top', '5%')
-      .style('right', '20%')
-      .style('width', '15%')
-      .style('height', '20%')
+      .style('top', '3%')
+      .style('right', '0%')
+      .style('width', '30%')
+      .style('height', '85%')
 
     this.width = 600
     this.height = 1650
@@ -223,12 +229,12 @@ export default {
 <style scoped>
 
 .name{
-  border-left: rgb(222, 224, 228) solid 8px;
-  color:rgb(238, 236, 236);
+  border-left: rgb(185, 199, 230) solid 3px;
+  color:white;
   padding-left:10px;
   margin-right: 60px;
   right:20px;
-  float: left;
+  float: right;
 }
 
 

@@ -1,6 +1,6 @@
  <template>
   <div id="temporal-features-container">
-    <div class="name">日历特征图</div>
+    <div class="name">时序特征</div>
     <div id="temporal-features"></div>
   </div>
 </template>
@@ -86,8 +86,8 @@ export default {
         .append('g')
         .attr('transform', 'translate(130,80)')
 
-      let innerRadius = 90
-      let outerRadius = 150
+      let innerRadius = 50
+      let outerRadius = 120
 
       // Scales
       var x = d3
@@ -113,7 +113,7 @@ export default {
         .data(hourList)
         .enter()
         .append("path")
-        .attr("fill", "#7C9EB8")//圆环的颜色
+        .attr("fill", "#999")
         .attr(
           "d",
           d3
@@ -165,8 +165,8 @@ export default {
             ? "rotate(180)"
             : "rotate(0)";
         })
+        .attr('fill','white')
         .style("font-size", "11px")
-        .attr("fill","white")//圆环旁的字
         .attr("alignment-baseline", "middle");
 
       // day ---------------------
@@ -201,7 +201,7 @@ export default {
           return xDay(d.day);
         })
         .attr("width", xDay.bandwidth())
-        .attr("fill", "#BFAFAC")
+        .attr("fill", "#999")
         .attr("y", function(d) {
           return yDay(d.value);
         })
@@ -211,12 +211,12 @@ export default {
         .on("mouseover", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#D57DE8");
+            .attr("fill", "#333");
         })
         .on("mouseout", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#BFAFAC");
+            .attr("fill", "#999");
         });
 
       dayContainer
@@ -225,6 +225,7 @@ export default {
         .call(d3.axisBottom(xDay));
 
       dayContainer.append("g").call(d3.axisLeft(yDay));
+      svg.selectAll('text').attr("fill", "white")
     },
 
     chartUpdate(SOURCE, TARGET) {
@@ -301,8 +302,8 @@ export default {
         .append('g')
         .attr('transform', 'translate(130,80)')
 
-      let innerRadius = 90
-      let outerRadius = 150
+      let innerRadius = 50
+      let outerRadius = 120
 
       // Scales
       var x = d3
@@ -311,7 +312,6 @@ export default {
         .align(0) // This does nothing
         .paddingOuter(0.1)
         .paddingInner(0.2)
-        .attr("fill","red")
         .domain(
           hourList.map(function(d) {
             return d.hour;
@@ -329,6 +329,7 @@ export default {
         .data(hourList)
         .enter()
         .append("path")
+        .attr("fill", "#999")
         .attr(
           "d",
           d3
@@ -381,6 +382,7 @@ export default {
             : "rotate(0)";
         })
         .style("font-size", "11px")
+        .attr("fill", "white")
         .attr("alignment-baseline", "middle");
 
       // day ---------------------
@@ -415,7 +417,7 @@ export default {
           return xDay(d.day);
         })
         .attr("width", xDay.bandwidth())
-        .attr("fill", "#BFAFAC")
+        .attr("fill", "#999")
         .attr("y", function(d) {
           return yDay(d.value);
         })
@@ -425,12 +427,12 @@ export default {
         .on("mouseover", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#D57DE8");
+            .attr("fill", "#333");
         })
         .on("mouseout", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#BFAFAC");
+            .attr("fill", "#999");
         });
 
       dayContainer
@@ -439,15 +441,17 @@ export default {
         .call(d3.axisBottom(xDay));
 
       dayContainer.append("g").call(d3.axisLeft(yDay));
+
+      svg.selectAll('text').attr("fill", "white")
     }
   },
   mounted() {
     d3.select("#" + "temporal-features-container")
       .style("position", "absolute")
-      .style("top", "65%")
-      .style("right", "60%")
-      .style("width", "40%")
-      .style("height", "40%");
+      .style("top", "67%")
+      .style("right", "7%")
+      .style("width", "90%")
+      .style("height", "10%");
 
     this.width = 800;
     this.height = 200;
@@ -472,8 +476,8 @@ export default {
 
 <style scoped>
 .name {
-  border-left: rgb(221, 224, 231) solid 8px;
-  color:white;
+  border-left: rgb(185, 199, 230) solid 3px;
+  color: white;
   padding-left: 10px;
   margin-left: 20px;
   right: 0px;

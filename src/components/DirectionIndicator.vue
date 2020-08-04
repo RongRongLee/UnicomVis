@@ -12,6 +12,7 @@
 import * as d3 from 'd3';
 import DataProvider from '../DataProvider';
 
+var accent = d3.scaleOrdinal(d3.schemeSet2);
 
 export default {
   name:'direction-indicator',
@@ -19,12 +20,14 @@ export default {
     return { }
   },
   methods:{
-    chartInit(positions){
+    chartInit(positions, semantic_counter){
+
+      console.log(semantic_counter)
 
         d3.select("#direction-indicator").selectAll('*').remove()
 
         const svg = d3.select("#direction-indicator").append('svg')
-          .attr("viewBox", [-50, 50, this.width, this.height])
+          .attr("viewBox", [-50, 50, this.width, this.height * 2])
           .attr("font-size", 16)
           .attr("font-family", "sans-serif")
 
@@ -68,7 +71,7 @@ export default {
 
         let ring = svg.append('circle')
         .attr('r', 100)
-        .attr('cx', this.width / 2)
+        .attr('cx', 60)
         .attr('cy', this.height / 2)
         .attr('stroke', 'white')
         .attr('opacity', 0.3)
@@ -76,7 +79,7 @@ export default {
         .attr('fill','none')
 
         let spins = svg.append('g')
-        .attr('transform','translate( ' + this.width /2 + ',' + this.height / 2 + ')')
+        .attr('transform','translate( ' + 60 + ',' + this.height / 2 + ')')
 
         let radius = 105
         let barHeight = 50
@@ -107,46 +110,46 @@ export default {
         let cross = svg.append('g')
 
         cross.append('circle')
-        .attr('cx', this.width /2)
+        .attr('cx', 60)
         .attr('cy', this.height /2)
         .attr('r', 6)
         .attr('fill', 'grey')
 
         cross.append('line')
-        .attr('x1', this.width /2 - 30)
-        .attr('x2', this.width /2 + 30)
+        .attr('x1', 60 - 30)
+        .attr('x2', 60 + 30)
         .attr('y1', this.height /2)
         .attr('y2', this.height /2)
         .attr('stroke', 'grey')
 
         cross.append('line')
-        .attr('x1', this.width /2)
-        .attr('x2', this.width /2)
+        .attr('x1', 60)
+        .attr('x2', 60)
         .attr('y1', this.height /2 - 30)
         .attr('y2', this.height /2 + 30)
         .attr('stroke', 'grey')
 
         cross.append('text')
         .attr('class','dir')
-        .attr('x', this.width /2 - 40)
+        .attr('x', 60 - 40)
         .attr('y', this.height /2)
         .text('西')
 
         cross.append('text')
         .attr('class','dir')
-        .attr('x', this.width /2 + 40)
+        .attr('x', 60 + 40)
         .attr('y', this.height /2)
         .text('东')
 
         cross.append('text')
         .attr('class','dir')
-        .attr('x', this.width /2)
+        .attr('x', 60)
         .attr('y', this.height /2 - 40)
         .text('北')
 
         cross.append('text')
         .attr('class','dir')
-        .attr('x', this.width /2)
+        .attr('x', 60)
         .attr('y', this.height /2 + 40)
         .text('南')
 
@@ -155,24 +158,58 @@ export default {
         .attr('alignment-baseline', 'middle')
         .attr('font-family','Microsoft Yahei')
         .attr('fill', 'white')
+
+        let group = svg.append('g')
+        .attr('transform','translate(0, 400)')
+
+        group
+        .selectAll('sc')
+        .data(['办公区', '住宅区','高校区','景点区','商业区'])
+        .enter()
+        .append('circle')
+        .attr('r', function(d,i){
+
+           return Math.sqrt(semantic_counter['' + i])
+        })
+        .attr('fill', function(d,i){
+
+          return accent(i-1)
+        })
+        .attr('opacity',0.7)
+        .attr('cx', 30)
+        .attr('cy', function(d,i){
+          return i * 80
+        })
+
+        group
+        .selectAll('sc')
+        .data(['办公区', '住宅区','高校区','景点区','商业区'])
+        .enter()
+        .append('text')
+        .attr('x', 70)
+        .attr('y', function(d,i){
+          return i * 80
+        })
+        .attr('fill','white')
+        .text(d => d)
     }
   },
   mounted(){
 
     d3.select('#' + 'direction-indicator-container')
       .style('position', 'absolute')
-      .style('top', '1%')
-      .style('right', '2%')
-      .style('width', '20%')
-      .style('height', '20%')
+      .style('top', '2%')
+      .style('left', '2%')
+      .style('width', '17.5%')
+      .style('height', '35.5%')
 
     this.width = 400
     this.height = 450
 
     let that = this
 
-    this.$root.$on('updateDirIndicator', positions => {
-      this.chartInit(positions)
+    this.$root.$on('updateDirIndicator', data => {
+      this.chartInit(data.positions, data.counter)
     })
 
   },
@@ -182,12 +219,12 @@ export default {
 <style scoped>
 
 .name{
-  border-left: rgb(221, 224, 231) solid 8px;
-  color:rgb(235, 226, 226);
+  border-left: rgb(185, 199, 230) solid 3px;
+  color:white;
   padding-left:10px;
   margin-right: 10px;
-  right:0px;
-  float: right;
+  left:10px;
+  float: left;
 }
 
 

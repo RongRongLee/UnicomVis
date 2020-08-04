@@ -1,7 +1,7 @@
  <template>
 
   <div id='high-assoc-cells-container'>
-      <div class='name' style="">桑基图</div>
+      <div class='name'>连山易水</div>
       <div id='high-assoc-cells'>
    
       </div>
@@ -29,7 +29,7 @@ export default {
          }
 
         const svg = d3.select("#high-assoc-cells").append('svg')
-          .attr("viewBox", [-10, -10, this.width + 50, this.height + 50])
+          .attr("viewBox", [-10, -10, this.width + 100, this.height + 100])
           .attr("font-size", 14)
           .attr("font-family", "sans-serif")
 
@@ -89,7 +89,6 @@ export default {
             .attr("y", d => d.y0)
             .attr("height", d => d.y1 - d.y0)
             .attr("width", d => d.x1 - d.x0)
-            .attr("fill","blue")//桑基图边的颜色
             .on('mouseover', function(d){
 
               let sourceId = d.id
@@ -99,15 +98,15 @@ export default {
               .attr('stroke', function(q){
 
                 if (sourceId == q.source.id || sourceId == q.target.id)
-                  return "blue"//鼠标放上去river颜色
-                else return 'grey'//其他river的颜色
+                  return "red"
+                else return 'grey'
               })
             })
             .on('mouseout', d=>{
 
               svg.selectAll('.river')
               .transition()
-              .attr('stroke', 'blue')//鼠标离开后river的颜色
+              .attr('stroke', 'grey')
             })
 
         svg.append("g")
@@ -118,7 +117,7 @@ export default {
             .append("path")
             .attr('class','river')
             .attr("d", sankeyLinkHorizontal())
-            .attr("stroke", 'blue')//初始桑基图的颜色
+            .attr("stroke", 'grey')
             .attr("stroke-opacity", '0.4')
             .attr("stroke-width", d => d.width)
             .style("mix-blend-mode", "multiply")
@@ -126,18 +125,18 @@ export default {
 
               that.$root.$emit('updateTemporal2', d)
               that.$root.$emit('updateUserSemantics', d)
-              // d3.selectAll('.river').attr('stroke', "red")
-              // d3.select(this).attr('stroke', 'red')
+              d3.selectAll('.river').attr('stroke', 'grey')
+              d3.select(this).attr('stroke', '#FFE215')
             })
             
         svg.append("g")
-            .style("font", "16px sans-serif")
+            .style("font", "12px sans-serif")
             .selectAll("text")
             .data(nodes)
             .enter()
             .append("text")
+            .attr("fill", 'white')
             .attr('font-family', 'Microsoft Yahei')
-            .attr("fill","white")
             .attr("x", d => d.x0 < that.width / 2 ? d.x1 + 6 : d.x0 - 6)
             .attr("y", d => (d.y1 + d.y0) / 2)
             .attr("dy", "0.35em")
@@ -151,12 +150,20 @@ export default {
   },
   mounted(){
 
+    d3.select('#' + 'high-assoc-cells-container')
+      .style('position', 'absolute')
+      .style('top', '5%')
+      .style('right', '35%')
+      .style('width', '60%')
+      .style('height', '65%')
+
     this.width = 700
     this.height = 700
 
     let that = this
 
     this.$root.$on('updateAssocCells', data => {
+
         let links = data[0]
         let cell_info = data[1]
         this.chartInit(links, cell_info)
@@ -169,20 +176,14 @@ export default {
 <style scoped>
 
 .name{
-  border-right: rgb(231, 232, 233) solid 8px;
-  color:rgb(238, 234, 234);
+  border-left: rgb(185, 199, 230) solid 3px;
+  color:white;
   padding-left:10px;
   margin-right: 10px;
   right:0px;
   float: left;
 }
-#high-assoc-cells-container{
-  position:absolute;
-  top:5%;
-  left:2%;
-  width:25%;
-  height: 30%;
-}
+
 
 
 </style>
