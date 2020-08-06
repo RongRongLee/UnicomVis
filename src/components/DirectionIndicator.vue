@@ -164,7 +164,7 @@ export default {
 
         group
         .selectAll('sc')
-        .data(['办公区', '住宅区','高校区','景点区','商业区'])
+        .data(['风景区', '办公区','高校区','商业区','住宅区'])
         .enter()
         .append('circle')
         .attr('r', function(d,i){
@@ -173,7 +173,7 @@ export default {
         })
         .attr('fill', function(d,i){
 
-          return accent(i-1)
+          return accent(parseInt(i-1))
         })
         .attr('opacity',0.7)
         .attr('cx', 30)
@@ -183,7 +183,7 @@ export default {
 
         group
         .selectAll('sc')
-        .data(['办公区', '住宅区','高校区','景点区','商业区'])
+        .data(['风景区', '办公区','高校区','商业区','住宅区'])
         .enter()
         .append('text')
         .attr('x', 70)

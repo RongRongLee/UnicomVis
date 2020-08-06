@@ -161,7 +161,6 @@ export default {
       svg.append("clipPath")
       .attr("id", "outline-clip")
       .append("polygon")
-      attr("fill",)
       .attr("points",function(q) { 
           return converted_data.map(function(d) {
               return [(d.x),(d.y)].join(",");
