@@ -113,7 +113,7 @@ export default {
         .data(hourList)
         .enter()
         .append("path")
-        .attr("fill", "#999")
+        .attr("fill", "#87AAC7")
         .attr(
           "d",
           d3
@@ -130,7 +130,17 @@ export default {
             })
             .padAngle(0.01)
             .padRadius(innerRadius)
-        );
+        )
+        .on("mouseover", function(d) {
+          d3.select(this)
+            .transition()
+            .attr("fill", "#b9606f");
+        })
+        .on("mouseout", function(d) {
+          d3.select(this)
+            .transition()
+            .attr("fill", "#87AAC7");
+        });
 
       // Add the labels
       svg
@@ -165,8 +175,8 @@ export default {
             ? "rotate(180)"
             : "rotate(0)";
         })
-        .attr('fill','white')
-        .style("font-size", "11px")
+        .attr('fill','black')
+        .style("font-size", "15px")
         .attr("alignment-baseline", "middle");
 
       // day ---------------------
@@ -201,7 +211,7 @@ export default {
           return xDay(d.day);
         })
         .attr("width", xDay.bandwidth())
-        .attr("fill", "#999")
+        .attr("fill", "#87AAC7")
         .attr("y", function(d) {
           return yDay(d.value);
         })
@@ -211,12 +221,12 @@ export default {
         .on("mouseover", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#333");
+            .attr("fill", "#b9606f");
         })
         .on("mouseout", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#999");
+            .attr("fill", "#87AAC7");
         });
 
       dayContainer
@@ -225,7 +235,7 @@ export default {
         .call(d3.axisBottom(xDay));
 
       dayContainer.append("g").call(d3.axisLeft(yDay));
-      svg.selectAll('text').attr("fill", "white")
+      svg.selectAll('text').attr("fill", "black")//改字的颜色
     },
 
     chartUpdate(SOURCE, TARGET) {
@@ -329,7 +339,7 @@ export default {
         .data(hourList)
         .enter()
         .append("path")
-        .attr("fill", "#999")
+        .attr("fill", "#929FB0")
         .attr(
           "d",
           d3
@@ -346,7 +356,19 @@ export default {
             })
             .padAngle(0.01)
             .padRadius(innerRadius)
-        );
+            
+            
+        )
+        .on("mouseover", function(d) {
+          d3.select(this)
+            .transition()
+            .attr("fill", "#b9606f");
+        })
+        .on("mouseout", function(d) {
+          d3.select(this)
+            .transition()
+            .attr("fill", "#929FB0");
+        });
 
       // Add the labels
       svg
@@ -381,9 +403,10 @@ export default {
             ? "rotate(180)"
             : "rotate(0)";
         })
-        .style("font-size", "11px")
-        .attr("fill", "white")
-        .attr("alignment-baseline", "middle");
+        .style("font-size", "15px")
+        .attr("fill", "black")
+        .attr("alignment-baseline", "middle")
+        
 
       // day ---------------------
 
@@ -417,7 +440,7 @@ export default {
           return xDay(d.day);
         })
         .attr("width", xDay.bandwidth())
-        .attr("fill", "#999")
+        .attr("fill", "#929FB0")
         .attr("y", function(d) {
           return yDay(d.value);
         })
@@ -427,12 +450,12 @@ export default {
         .on("mouseover", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#333");
+            .attr("fill", "#b9606f");
         })
         .on("mouseout", function(d) {
           d3.select(this)
             .transition()
-            .attr("fill", "#999");
+            .attr("fill", "#929FB0");
         });
 
       dayContainer
@@ -442,7 +465,7 @@ export default {
 
       dayContainer.append("g").call(d3.axisLeft(yDay));
 
-      svg.selectAll('text').attr("fill", "white")
+      svg.selectAll('text').attr("fill", "black")
     }
   },
   mounted() {
@@ -476,8 +499,8 @@ export default {
 
 <style scoped>
 .name {
-  border-left: rgb(185, 199, 230) solid 3px;
-  color: white;
+  border-left: rgb(185, 199, 230) solid 5px;
+  color: black;
   padding-left: 10px;
   margin-left: 20px;
   right: 0px;

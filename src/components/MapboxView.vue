@@ -94,10 +94,10 @@ export default {
     mapInit(that) {
 
       mapboxgl.accessToken =
-        "pk.eyJ1IjoiaG9uZ3l1amlhbmciLCJhIjoiY2s3N202NDIxMDhkdzNpcGg3djRtdnN4dCJ9.lysys8PBG25SxeHRF-sPvA";
+        "pk.eyJ1IjoiZXRhbCIsImEiOiJjazNmdXVxZmUwMHBzM29xaDNvbzMwd3RlIn0.9zGSjYri02fsUykmVrVEAg";
       this.map = new mapboxgl.Map({
         container: "map", // container id
-        style: "mapbox://styles/hongyujiang/cja855cbk09vg2spehn1ap5yo", // stylesheet location
+        style: "mapbox://styles/etal/ckdwuchxy3emx19p9qvt16kyz", // stylesheet location
         center: [105.579, 31.858], // starting position [lng, lat]
         zoom: 8.0 // starting zoom
       });
@@ -649,7 +649,7 @@ export default {
             meta["properties"]["name"] = cell.name.replace("ç»µé˜³", "");
             meta["properties"]["weight"] = 1;
             meta["properties"]["size"] = 0;
-            meta["properties"]["color"] = "rgba(255,255,255,0.1)";
+            meta["properties"]["color"] = "#5E8AC2";//基站颜色
             meta["properties"]["id"] = cell.id;
             meta["type"] = "Feature";
             meta["geometry"] = {};

@@ -29,6 +29,7 @@ export default {
         accent(2)
         accent(3)
 
+
         d3.select("#user-semantics").selectAll('*').remove()
 
         const svg = d3.select("#user-semantics").append('svg')
@@ -76,7 +77,7 @@ export default {
           return 'translate(' + (i * 50) + ',' + 10 + ')'
         })
         .append('text')
-        .attr("fill", 'white')
+        .attr("fill", 'black')//用户的颜色
         .attr('transform','rotate(90)')
         .attr('x',0)
         .attr('y',0)
@@ -107,7 +108,7 @@ export default {
         .attr('width', 30)
         .attr('fill','grey')
         .attr('stroke-width', '0')
-        .attr('opacity', 0.1)
+        .attr('opacity', 0.2)
 
         user_bars.selectAll('step')
         .data(d => d.filter(q => q.start[2] != -1))
@@ -123,14 +124,16 @@ export default {
             return (d.end[0] * 24 + d.end[1]) * 10 - (d.start[0] * 24 + d.start[1]) * 10
         })
         .attr('width', 30)
-        .attr('fill', d => accent(d.start[2]))
+        .attr('fill', function(d){
+          return accent(d.start[2])
+        })
         .attr('stroke-width', '1')
-        .attr('stroke', 'white')
+        .attr('stroke', 'black')
         .attr('opacity', 0.8)
 
            
         svg.selectAll('legend')
-        .data([-1,0,1,2,3])
+        .data([-1,0,1,2])
         .enter()
         .append('rect')
         .attr('y', 1700)
@@ -143,10 +146,10 @@ export default {
         .attr('width', 20)
 
         svg.selectAll('legend')
-        .data(['No semantic', 'Home','Two high','Weekend','Work time'])
+        .data(['无语义', '在家','工作','周末'])
         .enter()
         .append('text')
-        .attr('fill','white')
+        .attr('fill','black')
         .attr('y', 1750)
         .attr('font-size', 20)
         .attr('x', function(d,i){
@@ -164,7 +167,7 @@ export default {
 
         hourAxisG.selectAll('text')
         .attr('font-size', 18)
-        .attr('fill','white')
+        .attr('fill','black')
 
     }
   },
@@ -229,12 +232,12 @@ export default {
 <style scoped>
 
 .name{
-  border-left: rgb(185, 199, 230) solid 3px;
-  color:white;
+  border-left: rgb(185, 199, 230) solid 5px;
+  color:black;
   padding-left:10px;
   margin-right: 60px;
   right:20px;
-  float: right;
+  float: left;
 }
 
 

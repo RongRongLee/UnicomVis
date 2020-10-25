@@ -73,8 +73,8 @@ export default {
         .attr('r', 100)
         .attr('cx', 60)
         .attr('cy', this.height / 2)
-        .attr('stroke', 'white')
-        .attr('opacity', 0.3)
+        .attr('stroke', 'black')
+        .attr('opacity', 0.5)
         .attr('stroke-width', 10)
         .attr('fill','none')
 
@@ -94,7 +94,7 @@ export default {
         .attr('y2', d => (radius + d.counter / valueMax * barHeight) * Math.sin(d.value * Math.PI / 180))
         .attr('stroke','#8D85F2')
         .attr('fill','none')
-        .attr('opacity','0.5')
+        .attr('opacity','0.8')
         .attr('stroke-width', 5)
 
         spins.selectAll('.spinDot')
@@ -157,14 +157,14 @@ export default {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
         .attr('font-family','Microsoft Yahei')
-        .attr('fill', 'white')
+        .attr('fill', 'black')
 
         let group = svg.append('g')
         .attr('transform','translate(0, 400)')
 
         group
         .selectAll('sc')
-        .data(['风景区', '办公区','高校区','商业区','住宅区'])
+        .data(['学校区','住宅区', '办公区','商业区','风景区'])
         .enter()
         .append('circle')
         .attr('r', function(d,i){
@@ -183,14 +183,14 @@ export default {
 
         group
         .selectAll('sc')
-        .data(['风景区', '办公区','高校区','商业区','住宅区'])
+        .data(['学校区','住宅区', '办公区','商业区','风景区'])
         .enter()
         .append('text')
         .attr('x', 70)
         .attr('y', function(d,i){
           return i * 80
         })
-        .attr('fill','white')
+        .attr('fill','black')
         .text(d => d)
     }
   },
@@ -219,8 +219,8 @@ export default {
 <style scoped>
 
 .name{
-  border-left: rgb(185, 199, 230) solid 3px;
-  color:white;
+  border-left: rgb(185, 199, 230) solid 5px;
+  color:black;
   padding-left:10px;
   margin-right: 10px;
   left:10px;
