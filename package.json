@@ -13,7 +13,7 @@
     "@antv/g2": "^3.2.7",
     "@mapbox/mapbox-gl-draw": "^1.1.2",
     "@mapbox/mapbox-gl-language": "^0.10.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "d3": "^5.5.0",
     "d3-sankey": "^0.12.3",
     "d3-voronoi": "^1.1.4",
