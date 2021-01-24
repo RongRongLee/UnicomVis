@@ -32,7 +32,6 @@
 import FixedAttrIndicator from './components/FixedAttrIndicator';
 import DynamicAttrIndicator from './components/DynamicAttrIndicator';
 import DataProvider from './DataProvider';
-import d3Map from './components/d3Map.vue';
 import DirectionIndicator from './components/DirectionIndicator.vue';
 import InnerNet from './components/InnerNet.vue';
 import HighAssocCells from './components/HighAssocCells.vue';
@@ -79,21 +78,26 @@ export default {
   position: absolute;
   z-index:999;
   height:100%;
-
+   
 }
 
 .left-float-layer{
 
   left:0px;
-  height:100%;
+  /* height:100%; */
   width: 100%;
+  
 }
 
 .right-float-layer{
-
   right:0px;
-  width: 50%;
-  
+  width: 47%;
+  border-radius: 0.3em!important;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0) inset,
+    0 0.5em 1em rgba(0, 0, 0, 0.1)!important;
+  -webkit-backdrop-filter: blur(1px)!important;
+  backdrop-filter: blur(3px)!important;
+ 
 }
 
 

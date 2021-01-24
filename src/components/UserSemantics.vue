@@ -78,7 +78,7 @@ export default {
         })
         .append('text')
         .attr("fill", 'black')//用户的颜色
-        .attr('transform','rotate(90)')
+        // .attr('transform','rotate(90)')
         .attr('x',0)
         .attr('y',0)
         .text(d => d.name)

@@ -80,7 +80,7 @@ export default {
       const svg = d3
         .select("#temporal-features")
         .append("svg")
-        .attr("viewBox", [-50, -50, this.width + 100, this.height + 100])
+        .attr("viewBox", [-50, -50, this.width + 200, this.height + 200])//更改日历图大小
         .attr("font-size", 14)
         .attr("font-family", "sans-serif")
         .append('g')

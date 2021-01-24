@@ -98,8 +98,8 @@ export default {
       this.map = new mapboxgl.Map({
         container: "map", // container id
         style: "mapbox://styles/etal/ckdwuchxy3emx19p9qvt16kyz", // stylesheet location
-        center: [105.579, 31.858], // starting position [lng, lat]
-        zoom: 8.0 // starting zoom
+        center: [105.979, 31.500], // starting position [lng, lat]
+        zoom: 7.5 // starting zoom
       });
       var language = new MapboxLanguage({ defaultLanguage: "zh" });
       this.map.addControl(language);
@@ -155,7 +155,7 @@ export default {
         .append("svg")
         .attr("id", "voronoi-canvas")
         .style("position", "absolute")
-        .attr("width", "1100px")
+        .attr("width", "1000px")
         .attr("height", "1080px");
 
       svg.append("clipPath")
@@ -734,6 +734,13 @@ div #map {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+#voronoi-canvas{
+  border-radius: 0.3em!important;
+  box-shadow: 0 0 0 1px hsla(0, 0%, 100%, 0) inset,
+    0 0.5em 1em rgba(0, 0, 0, 0.1)!important;
+  -webkit-backdrop-filter: blur(1px)!important;
+  backdrop-filter: blur(1px)!important;
 }
 
 body {
